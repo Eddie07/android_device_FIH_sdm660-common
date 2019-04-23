@@ -51,6 +51,8 @@ std::map<std::string, std::string> devices_map = {
     {"SS2", "SS2"},
     {"SAT", "SAT"},
     {"B2N", "B2N"},
+       {"HH1", "HH1"},
+       {"C10", "C10"},
     {"SG1", "SG1"},
     {"PL2", "PL2"},
     {"SD1", "SD1"},
