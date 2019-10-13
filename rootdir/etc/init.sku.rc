@@ -1,0 +1,16 @@
+on fs
+    setprop ro.system.debug 0
+    setprop ro.wifi.channels 11
+    setprop ro.product.brand SHARP
+    setprop ro.product.board SDM630
+    setprop ro.product.model FIH
+    setprop ro.product.model.num 00A0
+    setprop ro.product.name SAT
+    setprop ro.product.device SAT
+    setprop ro.product.manufacturer SHARP
+    setprop ro.telephony.default_network 9
+    setprop ro.product.nickname "SHARP AQUOS S2"
+    setprop ro.com.google.clientidbase android-fih
+    setprop ro.build.version.base_os "SHARP/FS8032_00A0/HH6_sprout:9/PPR1.180610.011/FS8032S0215P:user/release-keys"
+	setprop ro.build.fingerprint SHARP/FS8032_00A0/HH6_sprout:9/PPR1.180610.011/FS8032S0314P:user/release-keys
+

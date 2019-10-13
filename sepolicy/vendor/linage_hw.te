@@ -1,0 +1,7 @@
+allow hal_power_default default_android_hwservice:hwservice_manager { add find };
+allow hal_camera_default vendor_shell_exec:file { execute_no_trans };
+allow hal_camera_default vendor_toolbox_exec:file { execute_no_trans };
+allow cameraserver camera_data_file:dir { search };
+#allow hvdcp sysfs_health:dir { search };
+allow cameraserver camera_data_file:file { read write open };
+#allow hvdcp sysfs_health:file { read write open };

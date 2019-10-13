@@ -1,0 +1,14 @@
+soong_namespace {
+    imports: [
+		"hardware/qcom/bootctrl",
+                "device/sharp/sdm660-common"
+],
+}
+subdirs = [
+    "light",
+    "thermal",
+    "livedisplay",
+    "init",
+    "power",
+]
+
