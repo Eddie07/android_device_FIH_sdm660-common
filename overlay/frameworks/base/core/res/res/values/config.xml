@@ -27,19 +27,17 @@
          The user is forbidden from setting the brightness below this level. -->
     <integer name="config_screenBrightnessSettingMinimum">4</integer>
     <!-- Height of the status bar -->
-    <dimen name="status_bar_height_portrait">114.0px</dimen>
-   <dimen name="status_bar_height_landscape">24.0dp</dimen>
+    <dimen name="status_bar_height_portrait">118.0px</dimen>
+   <dimen name="status_bar_height_landscape">118.0dp</dimen>
  <bool name="config_fillMainBuiltInDisplayCutout">false</bool>
 <bool name="config_dual_LTE_capability">true</bool>
- <dimen name="rounded_corner_radius_top">100.0px</dimen>
-<dimen name="rounded_corner_radius_bottom">100.0px</dimen>
+ <dimen name="rounded_corner_radius_top">98.0px</dimen>
+<dimen name="rounded_corner_radius_bottom">98.0px</dimen>
 <string name="config_mainBuiltInDisplayCutout">M-185,0 H183.34 c-9.77.44-19.57,0.08-29.28,1.24-20.33,1.14-41.18,5.17-58.62,16.24 C78.54,28.27,66,44.26,52,58.29 a72.73,72.73,0,0,1-38.29,19.58 c-16.53,2.51-34,1-49.09-6.62-9.85-4.62-17.88-12.24-25.21-20.18-10.46-11.27-20.9-22.75-33.53-31.66-11.49-8-24.9-12.78-38.53-15.42 C-149.92,0.81,-167.51.39,-185,0Z</string>
 
 
-    <!-- Screen brightness used to dim the screen while dozing in a very low power state.
-         May be less than the minimum allowed brightness setting
-         that can be set by the user. -->
-    <integer name="config_screenBrightnessDoze">17</integer>
+    <!-- Allow automatic adjusting of the screen brightness while dozing in low power state. -->
+    <bool name="config_allowAutoBrightnessWhileDozing">true</bool>
 
     <!-- Default screen brightness setting.
          Must be in the range specified by minimum and maximum. -->
@@ -76,7 +74,7 @@
 
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>20</item>
+        <item>10</item>
         <item>40</item>
         <item>100</item>
         <item>325</item>
@@ -140,7 +138,6 @@
          Wifi interfaces.  If the device doesn't want to support tethering over Wifi this
          should be empty.  An example would be "softap.*" -->
     <string-array translatable="false" name="config_tether_wifi_regexs">
-        <item>wlan0</item>
         <item>wigig0</item>
         <item>softap0</item>
     </string-array>
@@ -209,6 +206,7 @@
 
     <!-- Specifies whether to decouple the interactive state of the device from the display on/off state. -->
     <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>
+        <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
 
     <!-- Whether the display blanks itself when transition from a doze to a non-doze state -->
     <bool name="config_displayBlanksAfterDoze">false</bool>
@@ -326,7 +324,7 @@
     <bool name="config_useDevInputEventForAudioJack">true</bool>
 
     <!-- MMS user agent string -->
-    <string name="config_mms_user_agent" translatable="false">motox4</string>
+    <string name="config_mms_user_agent" translatable="false">Android-Mms/2.0</string>
 
     <!-- MMS user agent prolfile url -->
     <string name="config_mms_user_agent_profile_url">http://uaprof.motorola.com/phoneconfig/motox4/Profile/motox4.rdf</string>
@@ -337,24 +335,13 @@
     <!-- Default list of files pinned by the Pinner Service -->
     <string-array translatable="false" name="config_defaultPinnerServiceFiles">
         <item>"/system/framework/arm64/boot-framework.oat"</item>
-        <item>"/system/framework/framework.jar"</item>
+        <item>"/system/framework/boot-framework.vdex"</item>
         <item>"/system/framework/oat/arm64/services.odex"</item>
-        <item>"/system/framework/services.jar"</item>
+        <item>"/system/framework/oat/arm64/services.vdex"</item>
         <item>"/system/framework/arm64/boot.oat"</item>
+        <item>"/system/framework/boot.vdex"</item>
         <item>"/system/framework/arm64/boot-core-libart.oat"</item>
-        <item>"/apex/com.android.runtime/javalib/core-oj.jar"</item>
-        <item>"/apex/com.android.runtime/javalib/core-libart.jar"</item>
-        <item>"/apex/com.android.media/javalib/updatable-media.jar"</item>
-    </string-array>
-    <!-- List of files pinned by the Pinner Service with the apex boot image -->
-    <string-array translatable="false" name="config_apexBootImagePinnerServiceFiles">
-        <item>"/system/framework/framework.jar"</item>
-        <item>"/system/framework/services.jar"</item>
-        <item>"/system/framework/arm64/apex.oat"</item>
-        <item>"/system/framework/arm64/apex-core-libart.oat"</item>
-        <item>"/apex/com.android.runtime/javalib/core-oj.jar"</item>
-        <item>"/apex/com.android.runtime/javalib/core-libart.jar"</item>
-        <item>"/apex/com.android.media/javalib/updatable-media.jar"</item>
+        <item>"/system/framework/boot-core-libart.vdex"</item>
     </string-array>
 
     <!-- True if camera app should be pinned via Pinner Service -->
@@ -390,7 +377,17 @@
     <!-- Enable 802.11ac for Wifi hotspot (SAP) -->
     <bool translatable="false" name="config_wifi_softap_ieee80211ac_supported">true</bool>
     <bool name="config_supportDoubleTapWake">true</bool>
+    <integer name="config_num_physical_slots">2</integer>
 
     <string name="config_defaultWellbeingPackage">com.google.android.apps.wellbeing</string>
 
+
+    <!-- True if the firmware supports Wi-Fi link probing -->
+    <bool name="config_wifi_link_probing_supported">true</bool>
+
+    <!-- True if the firmware supports connected MAC randomization -->
+    <bool name="config_wifi_connected_mac_randomization_supported">true</bool>
+    <!-- Enable Zram writeback feature to allow unused pages in zram be written to flash. -->
+    <bool name="config_zramWriteback">true</bool>
+    <integer name="config_lightSensorWarmupTime">200</integer>
 </resources>
