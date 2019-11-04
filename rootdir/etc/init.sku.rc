@@ -1,16 +1,31 @@
-on fs
-    setprop ro.system.debug 0
-    setprop ro.wifi.channels 11
-    setprop ro.product.brand SHARP
-    setprop ro.product.board SDM630
-    setprop ro.product.model FIH
-    setprop ro.product.model.num 00A0
-    setprop ro.product.name SAT
-    setprop ro.product.device SAT
-    setprop ro.product.manufacturer SHARP
-    setprop ro.telephony.default_network 9
-    setprop ro.product.nickname "SHARP AQUOS S2"
-    setprop ro.com.google.clientidbase android-fih
-    setprop ro.build.version.base_os "SHARP/FS8032_00A0/HH6_sprout:9/PPR1.180610.011/FS8032S0215P:user/release-keys"
-	setprop ro.build.fingerprint SHARP/FS8032_00A0/HH6_sprout:9/PPR1.180610.011/FS8032S0314P:user/release-keys
+on property:ro.vendor.ril.mbn_copy_completed=1
+    write /data/vendor/radio/copy_complete 1
 
+on fs
+    setprop ro.wifi.channels 11
+    setprop ro.build.product DRG
+    setprop ro.product.brand Nokia
+    setprop ro.product.board SDM636
+    setprop ro.product.locale en-GB
+    setprop persist.dsds.enabled true
+    setprop ro.product.model.num 00WW
+    setprop ro.product.name Dragon_00WW
+    setprop ro.product.device DRG_sprout
+    setprop persist.anr.block_long_time 3
+    setprop ro.config.dbgcfgtool_config 2
+    setprop persist.anr.block_short_time 1
+    setprop ro.com.android.mobiledata true
+    setprop persist.anr.allow_dump_number 1
+    setprop ro.com.android.dataroaming false
+    setprop ro.product.model.display SAT
+    setprop ro.product.model "Nokia 6.1 Plus"
+    setprop ro.product.manufacturer "HMD Global"
+    setprop ro.product.nickname "Sharp Aquos S2"
+    setprop ro.product.ril.model.display SAT
+    setprop ro.telephony.default_network "22,22"
+    setprop ro.product.ril.nickname "Sharp Aquos S2"
+    setprop ro.com.google.clientidbase android-hmd-rev2
+    setprop setupwizard.feature.deferred_snooze_allow_never trues
+	setprop ro.build.fingerprint Nokia/Dragon_00WW/DRG_sprout:10/QKQ1.190828.002/00WW_4_050:user/release-keys
+	setprop ro.system.build.fingerprint Nokia/Dragon_00WW/DRG_sprout:10/QKQ1.190828.002/00WW_4_050:user/release-keys
+	setprop ro.build.description "Dragon_00WW-user 10 QKQ1.190828.002 00WW_4_050 release-keys"

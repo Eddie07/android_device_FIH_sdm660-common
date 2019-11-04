@@ -25,6 +25,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+
 import /vendor/etc/init/hw/init.msm.usb.configfs.rc
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.power.rc
@@ -32,6 +33,7 @@ import /vendor/etc/init/hw/init.fingerprint.${ro.boot.device}.rc
 import /vendor/etc/init/hw/init.nfc.nxp.rc
 import /vendor/etc/init/hw/init.sku.rc
 import /vendor/etc/init/hw/init.${ro.boot.device}.rc
+import /vendor/etc/init/hw/init.SATSS2.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -1142,6 +1144,7 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
 #   group wifi inet keystore
     interface android.hardware.wifi.supplicant@1.0::ISupplicant default
     interface android.hardware.wifi.supplicant@1.1::ISupplicant default
+    interface android.hardware.wifi.supplicant@1.2::ISupplicant default
     class main
     socket vendor_wpa_wlan0 dgram 660 wifi wifi
     disabled
@@ -1249,10 +1252,10 @@ service vendor.mlid /vendor/bin/mlid
     group gps
     socket mlid stream 0666 gps gps
 
-#service vendor.loc_launcher /vendor/bin/loc_launcher
-#    class late_start
-#   user gps
-#   group gps inet net_raw oem_2901 net_admin wifi
+service vendor.loc_launcher /vendor/bin/loc_launcher
+   class late_start
+  user gps
+  group gps inet net_raw oem_2901 net_admin wifi
 
 service mlid /vendor/bin/mlid
     class late_start
@@ -1387,13 +1390,21 @@ service vendor.esepmdaemon /vendor/bin/esepmdaemon
     user system
     group nfc
     
+service charger /system/bin/charger
+    class charger
+    user system
+    group system graphics input
+    disabled
+    seclabel u:r:healthd:s0
+    
 on charger
     load_system_props
-    start qcom-post-boot
     start vendor.hvdcp_opti
     setprop sys.usb.configfs 1
     start vendor.qcom-post-boot
     start vendor.power_off_alarm
+    start vendor.thermal-engine
+    start charger
     
 
 service vendor.time_daemon /vendor/bin/time_daemon
@@ -1573,12 +1584,6 @@ on property:init.svc.vendor.per_mgr=running
 on property:sys.shutdown.requested=*
     stop vendor.per_proxy
 
-#remosaic Samsung 
-service remosaic_daemon /system/vendor/bin/remosaic_daemon
-    class late_start
-    user camera
-    group camera
-
 service vendor.qseecomd /vendor/bin/qseecomd
     class core
     user root
@@ -1620,6 +1625,18 @@ service vendor.ppd /vendor/bin/mm-pp-dpps
     socket pps stream 0660 system system
     disabled
     writepid /dev/cpuset/system-background/tasks
+    
+service ssgqmigd /vendor/bin/ssgqmigd
+    class late_start
+    user radio
+    group radio gps system
+    socket ssgqmig seqpacket 0660 radio inet
+
+service ssgtzd /vendor/bin/ssgtzd
+    class late_start
+    user system
+    group system
+    socket ssgtzd stream 0660 system inet
 
 on property:init.svc.vendor.hwcomposer-2-1=stopped
     stop vendor.ppd
@@ -1636,6 +1653,21 @@ service vendor.energy-awareness /vendor/bin/energy-awareness
     group system
     oneshot
     writepid /dev/cpuset/system-background/tasks
+    
+service charger_monitor /system/bin/charger_monitor
+    user root
+    group root
+    disabled
+
+service qbcharger /charger -m 1
+    disabled
+    oneshot
+
+on property:sys.qbcharger.enable=true
+    start qbcharger
+
+on property:sys.qbcharger.enable=false
+    stop qbcharger
 
 service vendor.mdtpd /vendor/bin/mdtpd
     class late_start

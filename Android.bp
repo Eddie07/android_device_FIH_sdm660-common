@@ -10,5 +10,6 @@ subdirs = [
     "livedisplay",
     "init",
     "power",
+    "cryptfs_hw",
 ]
 
