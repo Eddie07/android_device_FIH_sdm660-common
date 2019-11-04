@@ -5,4 +5,4 @@ Device configuration for FIH SDM660 Devices
 
 Supported devices :
 
-ss2, sat, sg1, hh1, pl2, b2n
+SA2, SAT, SG1, HH1, PL2, B2N, DRG
