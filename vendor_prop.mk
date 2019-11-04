@@ -7,7 +7,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
     audio.deep_buffer.media=true \
     audio.offload.disable=false \
-    audio.offload.video=false \
+    audio.offload.video=true \
     persist.audio.dualmic.config=endfire \
     persist.vendor.audio.fluence.audiorec=false \
     persist.vendor.audio.fluence.speaker=false \
@@ -18,6 +18,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.audio.ras.enabled=false \
    persist.vendor.audio.hifi.int_codec=true \
     ro.vendor.audio.sdk.ssr=false \
+    persist.vendor.bt.a2dp_offload_cap=sbc-aac \
     ro.vendor.audio.sdk.fluencetype=none \
     ro.qc.sdk.audio.fluencetype=none \
     ro.qc.sdk.audio.ssr=false \
@@ -45,17 +46,74 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.voice.path.for.pcm.voip=true \
     vendor.audio.offload.min.duration.secs=60
 
+# Audio Feature
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.af.client_heap_size_kbyte=7168 \
+    vendor.audio.feature.a2dp_offload.enable=false \
+    vendor.audio.feature.afe_proxy.enable=true \
+    vendor.audio.feature.anc_headset.enable=true \
+    vendor.audio.feature.battery_listener.enable=false \
+    vendor.audio.feature.compr_cap.enable=false \
+    vendor.audio.feature.compress_in.enable=false \
+    vendor.audio.feature.compress_meta_data.enable=true \
+    vendor.audio.feature.compr_voip.enable=true \
+    vendor.audio.feature.concurrent_capture.enable=false \
+    vendor.audio.feature.custom_stereo.enable=true \
+    vendor.audio.feature.display_port.enable=false \
+    vendor.audio.feature.dsm_feedback.enable=false \
+    vendor.audio.feature.dynamic_ecns.enable=false \
+    vendor.audio.feature.ext_hw_plugin.enable=false \
+    vendor.audio.feature.external_dsp.enable=false \
+    vendor.audio.feature.external_speaker.enable=false \
+    vendor.audio.feature.external_speaker_tfa.enable=false \
+    vendor.audio.feature.fluence.enable=true \
+    vendor.audio.feature.fm.enable=true \
+    vendor.audio.feature.hdmi_edid.enable=true \
+    vendor.audio.feature.hdmi_passthrough.enable=false \
+    vendor.audio.feature.hfp.enable=true \
+    vendor.audio.feature.hifi_audio.enable=true \
+    vendor.audio.feature.hwdep_cal.enable=false \
+    vendor.audio.feature.incall_music.enable=false \
+    vendor.audio.feature.multi_voice_session.enable=true \
+    vendor.audio.feature.keep_alive.enable=false \
+    vendor.audio.feature.kpi_optimize.enable=true \
+    vendor.audio.feature.maxx_audio.enable=false \
+    vendor.audio.feature.ras.enable=false \
+    vendor.audio.feature.record_play_concurency.enable=false \
+    vendor.audio.feature.src_trkn.enable=true \
+    vendor.audio.feature.spkr_prot.enable=true \
+    vendor.audio.feature.ssrec.enable=true \
+    vendor.audio.feature.usb_offload.enable=false \
+    vendor.audio.feature.usb_offload_burst_mode.enable=false \
+    vendor.audio.feature.usb_offload_sidetone_volume.enable=false \
+    vendor.audio.feature.deepbuffer_as_primary.enable=false \
+    vendor.audio.feature.vbat.enable=true \
+    vendor.audio.feature.wsa.enable=true \
+    vendor.audio.feature.audiozoom.enable=false \
+    vendor.audio.feature.snd_mon.enable=true
+
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
     bt.max.hfpclient.connections=1 \
-    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     vendor.qcom.bluetooth.soc=cherokee \
-    ro.bluetooth.a4wp=false
+    persist.bluetooth.bluetooth_audio_hal.disabled=false \
+    ro.vendor.bluetooth.wipower=false \
+    persist.bluetooth.a2dp_offload.disabled=true \
+    persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac \
+    persist.vendor.bt.aac_frm_ctl.enabled=true \
+    ro.bluetooth.a2dp_offload.supported=true \
+    persist.vendor.qcom.bluetooth.enable.splita2dp=true \
+    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac
 
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap, com.android.camera, org.mokee.snap, com.hmdglobal.camera2 \
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.android.camera2,com.hmdglobal.camera2 \
+    camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.android.camera2,com.hmdglobal.camera2 \
+    persist.vendor.camera.privapp.list=org.codeaurora.snapcam \
+    persist.camera.privapp.list=org.codeaurora.snapcam \
     persist.camera.camera2=true \
+    persist.vendor.camera.HAL3.enabled=1 \
+    persist.vendor.camera.eis.enable=1 \
     persist.vendor.camera.expose.aux=1 \
     persist.vendor.camera.is_type=3 \
     persist.vendor.camera.max.previewfps=60 \
@@ -69,7 +127,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
    persist.vendor.camera.llc=1 \
    persist.vednor.camera.llnoise=1 \
    persist.vendor.camera.gyro.disable=0 \
-   persist.vendor.dpm.feature=11 \
    persist.vendor.overlay.izat.optin=rro \
    persist.vendor.camera.fdvideo=1 \
    camera.panorama.quality=middle \
@@ -77,10 +134,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
    persist.vendor.camera.ven_hdr=0 \
    persist.vendor.dpm.feature=11
 
+# Codec2 switch
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.media.codec2=2
+    
 #CNE
 PRODUCT_PROPERTY_OVERRIDES += \
-  persist.cne.feature=1
-  
+  persist.cne.feature=1 \
+     persist.vendor.cne.feature=1 
 
 #CPU
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -95,17 +156,23 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.enable_hwc_vds=1 \
-    vendor.display.enable_default_color_mode=1 \
-    debug.sf.hw=1 \
-    debug.sf.latch_unsignaled=1 \
-    sdm.debug.disable_partial_split=1 
+    vendor.display.enable_default_color_mode=0 \
+    vendor.video.disable.ubwc=1 \
     vendor.gralloc.enable_fb_ubwc=1 \
+    debug.sf.hw=1 \
     dev.pm.dyn_samplingrate=1 \
     ro.opengles.version=196610 \
-    vendor.video.disable.ubwc=1 \
-    debug.sf.recomputecrop=0 \
     persist.demo.hdmirotationlock=false \
-    ro.sf.hwc_set_default_colormode=true
+    persist.debug.wfd.enable=1 \
+    persist.hwc.enable_vds=1 \
+    debug.sf.latch_unsignaled=1 \
+    ro.opengles.version=196610 \
+    vendor.display.disable_partial_split=1 \
+    vendor.display.disable_rotator_downscale=1 \
+    vendor.display.disable_skip_validate=1 \
+    vendor.display.enable_default_color_mode=0 \
+    ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
+    ro.surface_flinger.max_virtual_display_dimension=4096
 
    
 
@@ -119,27 +186,56 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.nfc.port=I2C \
     persist.nfc.smartcard.config=SIM1
 
+# Fling
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.min.fling_velocity=160 \
+    ro.max.fling_velocity=20000
+
+# enable FIFO scheduling for UI and Render threads by default
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    sys.use_fifo_ui=1
+
+# GPS
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.overlay.izat.optin=rro
+
+# HAL1 apps list
+PRODUCT_PROPERTY_OVERRIDES += \
+    camera.hal1.packagelist=com.whatsapp,com.android.camera,com.android.camera2,com.instagram.android \
+    vendor.camera.hal1.packagelist= com.whatsapp,com.android.camera,com.android.camera2,com.instagram.android
+
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
- vendor.mm.enable.qcom_parser=13623022 \
- persist.mm.enable.prefetch=true \
- media.stagefright.enable-player=true \
- media.stagefright.enable-http=true \
- media.stagefright.enable-aac=true \
- media.stagefright.enable-qcp=true \
- media.stagefright.enable-scan=true \
- mmp.enable.3g2=true \
- media.aac_51_output_enabled=true \
- ro.netflix.bsp_rev=Q660-13149-1 \
- mm.enable.smoothstreaming=true \
- vidc.enc.target_support_bframe=1 \
- vendor.vidc.enc.disable_bframes=1 \
- vendor.vidc.dec.enable.downscalar=0 \
- vendor.vidc.enc.disable.pq=false \
- vidc.enc.dcvs.extra-buff-count=2
+    debug.stagefright.omx_default_rank.sw-audio=1 \
+    debug.stagefright.omx_default_rank=0 \
+    media.aac_51_output_enabled=true \
+    media.stagefright.enable-aac=true \
+    media.stagefright.enable-http=true \
+    media.stagefright.enable-player=true \
+    media.stagefright.enable-qcp=true \
+    media.stagefright.enable-scan=true \
+    media.stagefright.thumbnail.prefer_hw_codecs=true \
+    mm.enable.qcom_parser=13631471 \
+    mm.enable.smoothstreaming=true \
+    mmp.enable.3g2=true \
+    persist.mm.enable.prefetch=true \
+    vendor.vidc.dec.enable.downscalar=1 \
+    vendor.vidc.enc.disable.pq=false \
+    vendor.vidc.enc.disable_bframes=1 \
+    vidc.enc.dcvs.extra-buff-count=2 \
+    vidc.enc.target_support_bframe=1
+
+# Memory optimizations
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.qti.sys.fw.bservice_enable=true
+
 # Perf
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so
+
+# Proximity
+PRODUCT_PROPERTY_OVERRIDES += \
+    gsm.proximity.enable=true
 
 # Play store
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -152,7 +248,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.dfr_mode_set=1 \
     persist.vendor.radio.relay_oprt_change=1 \
     persist.vendor.radio.oem_ind_to_both=0 \
-    persist.vendor.radio.qcril_uim_vcc_feature=1 \
     persist.vendor.radio.0x9e_not_callname=1 \
     persist.vendor.radio.mt_sms_ack=30 \
     persist.vendor.radio.force_get_pref=1 \
@@ -185,7 +280,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.qmi.adb_logmask=0 \
     persist.radio.adb_log_on=0 \
     persist.vendor.radio.apm_sim_not_pwdn=1 \
-    persist.vendor.radio.custom_ecc=1 \
     persist.vendor.radio.data_con_rprt=true \
     persist.vendor.radio.add_power_save=1 \
     persist.net.doxlat=true \
@@ -216,7 +310,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.ims.disableQXDMLogs=1 \
     ro.vendor.build.vendorprefix=/vendor \
     persist.radio.multisim.config=dsds \
-    persist.vendor.radio.atfwd.start=true
+    ro.telephony.iwlan_operation_mode=legacy \
+    persist.vendor.radio.atfwd.start=true \
+    persist.vendor.radio.add_power_save=1
+
+# persist.vendor.radio.qcril_uim_vcc_feature=1 \
 
 # RmNet Data
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -245,18 +343,17 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config.extra=none
-    
-#Vibrator
-PRODUCT_PROPERTY_OVERRIDES += \
- persist.vibratorclickduration=50 \
- persist.vibratortickduration=50 \
- persist.vibratorstrenght=1000 
+    persist.sys.usb.config.extra=none  
 
 
 # Voice assistant
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opa.eligible_device=true
+
+#Vibrator
+PRODUCT_PROPERTY_OVERRIDES += \
+ persist.vibratorstrenght=1000 
+
 
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -265,24 +362,32 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.debug.wfd.enable=1
 
 # Sensors
-   PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_PROPERTY_OVERRIDES += \
 	ro.vendor.sensors.dev_ori=true \
+        ro.vendor.sensors.mot_detect=true \
 	ro.vendor.sensors.pmd=true \
 	ro.vendor.sensors.sta_detect=true \
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.bluetooth.a2dp_offload.supported=true \
+    persist.bluetooth.a2dp_offload.disabled=false \
+    persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac \
+    vendor.audio.hal.dynamic.qos.config.supported=true \
+    vendor.audio.hal.output.suspend.supported=true
+
 #Cofig zram
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.vendor.qti.config.zram=true \
+  ro.vendor.qti.config.zram=true \
+  ro.vendor.qti.config.swap=true
 
 #Call recording
 PRODUCT_PROPERTY_OVERRIDES += \
 persist.call_recording.src=4 \
 persist.call_recording.enabled=true
 
-#GMS
-PRODUCT_PROPERTY_OVERRIDES += \
- ro.build.fingerprint=SHARP/FS8032_00A0/HH6_sprout:9/PPR1.180610.011/FS8032S0314P:user/release-keys \
- ro.build.version.base_os="SHARP/FS8032_00A0/HH6_sprout:9/PPR1.180610.011/FS8032S0215P:user/release-keys" \
- ro.com.google.clientidbase=android-fih
+#MEdia
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	media.settings.xml="vendor/etc/media_profiles_vendor.xml"
+
 
 
