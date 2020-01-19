@@ -168,7 +168,6 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/msm_vidc_dec_sec     0660   system     audio
 /dev/msm_vidc_enc         0660   system     audio
 /dev/msm_rotator          0660   system     system
-/dev/hw_random            0600   root       root
 /dev/sdsprpc-smd          0660   system     system
 
 #permissions for audio
@@ -330,6 +329,9 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/leds/blue     delay_on     0640    system    system
 /sys/class/leds/blue     delay_off    0640    system    system
 /sys/class/leds/blue     breath       0640    system    system
+/sys/class/leds/rgb     delay_on     0640    system    system
+/sys/class/leds/rgb     delay_off    0640    system    system
+/sys/class/leds/rgb     breath       0640    system    system
 
 # NPU device
 /dev/msm_npu             0644   system     system
@@ -391,13 +393,6 @@ firmware_directories /vendor/firmware_mnt/image/
 # Audio device
 /sys/devices/platform/mods_codec.0 uevent 0660 root oem_5020
 /sys/devices/platform/mods_codec.0/* uevent 0660 root oem_5020
-
-# MOD camera device
-/dev/mot_camera_ext*               0660   system     camera
-/sys/devices/virtual/video4linux/mot_camera_ext* open_mode 0660 system camera
-/sys/devices/virtual/video4linux/mot_camera_ext* uevent 0660 root oem_5020
-/sys/devices/virtual/video4linux/video* open_mode 0660 system camera
-/sys/devices/virtual/video4linux/video* uevent 0660 root oem_5020
 
 # Trustonic TEE device
 /dev/mobicore             0600   system     system

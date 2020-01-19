@@ -58,6 +58,7 @@ void property_override_dual(char const system_prop[], char const vendor_prop[], 
 void load_op3(const char *model) {
     property_override_dual("ro.product.model", "ro.product.vendor.model", model);
     property_override("ro.build.product", "DRG");
+    property_override("ro.product.nickname", model);
 property_override("ro.build.name", "Dragon_00WW");
     property_override_dual("ro.product.device", "ro.product.vendor.device", "DRG_sprout");
     property_override("ro.build.description", "Nokia/Dragon_00WW/DRG_sprout:10/QKQ1.190828.002/00WW_4_050:user/release-keys");
@@ -67,8 +68,13 @@ property_override("ro.build.name", "Dragon_00WW");
 
 
 void vendor_load_properties() {
-    
-       load_op3("Sharp Aquos S2");
-      LOG(ERROR) << __func__ << ": unexcepted rf version!";
+     const std::string fih_version = android::base::GetProperty("ro.boot.device", "");
+  if (fih_version == "HH6") load_op3("Sharp Aquos S3");
+  else if (fih_version == "HH1") load_op3("Sharp Aquos S3");
+  else if (fih_version == "SG1") load_op3("Sharp Aquos S3 mini");
+   else if   (fih_version == "SAT") load_op3("Sharp Aquos S2 Plus");
+   else if   (fih_version == "SS2") load_op3("Sharp Aquos S2 4/64");
+     else   load_op3("FIH phone");
+      LOG(ERROR) << __func__ << ": oops";
     }
 

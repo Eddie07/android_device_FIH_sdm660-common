@@ -50,7 +50,7 @@ if [ -f /sys/class/drm/card0-DSI-1/modes ]; then
     echo "detect" > /sys/class/drm/card0-DSI-1/status
     mode_file=/sys/class/drm/card0-DSI-1/modes
     while read line; do
-        fb_width=${line%x*};
+        fb_width=${line%%x*};
         break;
     done < $mode_file
 elif [ -f /sys/class/graphics/fb0/virtual_size ]; then
@@ -88,9 +88,12 @@ function set_density_by_fb() {
                 setprop vendor.display.lcd_density 420
                 ;;
             "SAT") #For SAT project, should use 480
-                setprop vendor.display.lcd_density 420
+                setprop vendor.display.lcd_density 480
                 ;;
-            "SD1") #For SD1 project, should use 480
+            "HH6") #For SD1 project, should use 420
+                setprop vendor.display.lcd_density 480
+                ;;
+            "SD1") #For SD1 project, should use 420
                 setprop vendor.display.lcd_density 480
                 ;;
             "PL2") #For PL2 project, should use 420
@@ -298,10 +301,8 @@ case "$target" in
             *)
                 if [ $fb_width -le 1600 ]; then
                     setprop vendor.display.lcd_density 560
-                    setprop dalvik.vm.heapgrowthlimit 256m
                 else
                     setprop vendor.display.lcd_density 640
-                    setprop dalvik.vm.heapgrowthlimit 512m
                 fi
                 ;;
         esac
@@ -311,59 +312,61 @@ case "$target" in
             *)
                 if [ $fb_width -le 1600 ]; then
                     setprop vendor.display.lcd_density 560
-                    setprop dalvik.vm.heapgrowthlimit 256m
                 else
                     setprop vendor.display.lcd_density 640
-                    setprop dalvik.vm.heapgrowthlimit 512m
                 fi
                 ;;
         esac
         ;;
-    "sdm660")
-        if [ -f /vendor/firmware_mnt/verinfo/ver_info.txt ]; then
-            modem=`cat /vendor/firmware_mnt/verinfo/ver_info.txt |
-                    sed -n 's/^[^:]*modem[^:]*:[[:blank:]]*//p' |
-                    sed 's/.*AT.\(.*\)/\1/g' | cut -d \- -f 1`
-            # In SDM660 if modem version is greater than 3.1, need
-            # to use the new vendor-ril which supports L+L feature
-            # otherwise use the existing old one.
-            zygote=`getprop ro.zygote`
-            case "$zygote" in
-            "zygote64_32")
-                if [ "$modem" \< "3.1" ]; then
-                    setprop vendor.rild.libpath "/vendor/lib64/libril-qc-qmi-1.so"
+    "kona")
+        case "$soc_hwplatform" in
+            *)
+                if [ $fb_width -le 1600 ]; then
+                    setprop vendor.display.lcd_density 560
                 else
-                    setprop vendor.rild.libpath "/vendor/lib64/libril-qc-hal-qmi.so"
+                    setprop vendor.display.lcd_density 640
                 fi
                 ;;
-            "zygote32")
-                if [ "$modem" \< "3.1" ]; then
-                    setprop vendor.rild.libpath "/vendor/lib/libril-qc-qmi-1.so"
-                else
-                    setprop vendor.rild.libpath "/vendor/lib/libril-qc-hal-qmi.so"
+        esac
+        ;;
+    "lito")
+        case "$soc_hwplatform" in
+            *)
+                sku_ver=`cat /sys/devices/platform/soc/aa00000.qcom,vidc1/sku_version` 2> /dev/null
+                if [ $sku_ver -eq 1 ]; then
+                    setprop vendor.media.target.version 1
                 fi
                 ;;
-            esac
-        else
-            zygote=`getprop ro.zygote`
-            case "$zygote" in
-            "zygote64_32")
-                setprop vendor.rild.libpath "/vendor/lib64/libril-qc-qmi-1.so"
-                ;;
-            "zygote32")
-                setprop vendor.rild.libpath "/vendor/lib/libril-qc-qmi-1.so"
-                ;;
-            esac
-        fi
+        esac
         ;;
     "sdm710" | "msmpeafowl")
         case "$soc_hwplatform" in
             *)
                 sku_ver=`cat /sys/devices/platform/soc/aa00000.qcom,vidc1/sku_version` 2> /dev/null
                 if [ $sku_ver -eq 1 ]; then
-                    setprop vendor.media.sdm710.version 1
+                    setprop vendor.media.target.version 1
                 fi
                 ;;
+        esac
+        ;;
+    "msm8953")
+        cap_ver = 1
+                if [ -e "/sys/devices/platform/soc/1d00000.qcom,vidc/capability_version" ]; then
+                    cap_ver=`cat /sys/devices/platform/soc/1d00000.qcom,vidc/capability_version` 2> /dev/null
+                else
+                    cap_ver=`cat /sys/devices/soc/1d00000.qcom,vidc/capability_version` 2> /dev/null
+                fi
+
+                if [ $cap_ver -eq 1 ]; then
+                    setprop vendor.media.target.version 1
+                fi
+                ;;
+    #Set property to differentiate SDM660 & SDM455
+    #SOC ID for SDM455 is 385
+    "sdm660")
+        case "$soc_hwid" in
+           385)
+               setprop vendor.media.target.version 1
         esac
         ;;
 esac
@@ -383,6 +386,43 @@ esac
 #property if any target is setting forcefully.
 set_density_by_fb
 
+
+# set Lilliput LCD density for ADP
+product=`getprop ro.build.product`
+
+case "$product" in
+        "msmnile_au")
+         setprop vendor.display.lcd_density 160
+         echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq
+         echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/max_freq
+         echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
+         echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
+         ;;
+        *)
+        ;;
+esac
+case "$product" in
+        "sm6150_au")
+         setprop vendor.display.lcd_density 160
+         ;;
+        *)
+        ;;
+esac
+case "$product" in
+        "sdmshrike_au")
+         setprop vendor.display.lcd_density 160
+         ;;
+        *)
+        ;;
+esac
+
+case "$product" in
+        "msmnile_gvmq")
+         setprop vendor.display.lcd_density 160
+         ;;
+        *)
+        ;;
+esac
 # Setup display nodes & permissions
 # HDMI can be fb1 or fb2
 # Loop through the sysfs nodes and determine
@@ -482,14 +522,12 @@ else
     set_perms /sys/devices/virtual/hdcp/msm_hdcp/min_level_change system.graphics 0660
 fi
 
+# allow system_graphics group to access pmic secure_mode node
+set_perms /sys/class/lcd_bias/secure_mode system.graphics 0660
+set_perms /sys/class/leds/wled/secure_mode system.graphics 0660
+
 boot_reason=`cat /proc/sys/kernel/boot_reason`
 reboot_reason=`getprop ro.boot.alarmboot`
-case "$bootdevice" in
-    "SS2" | "SAT" | "SD1")
-        # Boot into Android
-        setprop ro.alarm_boot false
-        ;;
-    *)
 if [ "$boot_reason" = "3" ] || [ "$reboot_reason" = "true" ]; then
     setprop ro.vendor.alarm_boot true
 else

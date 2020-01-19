@@ -1,6 +1,14 @@
 #
 # vendor props for sdm660
 #
+#Widivinefakes
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.vendor.build.fingerprin1=SHARP/FS8032_00A0/HH6_sprout:10/QKQ1.190828.002/FS8032S1204Q:user/release-keys \
+	ro.product.manufacture1=SHARP \
+	ro.product.devic1=HH6_sprout \
+	ro.product.nam1=FS8032_00A0 \
+	ro.product.mode1=FS8032
+
 
 # Audio
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -9,11 +17,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.disable=false \
     audio.offload.video=true \
     persist.audio.dualmic.config=endfire \
-    persist.vendor.audio.fluence.audiorec=false \
+    persist.vendor.audio.fluence.audiorec=true \
     persist.vendor.audio.fluence.speaker=false \
     persist.vendor.audio.fluence.voicecall=false \
     persist.vendor.audio.fluence.voicecomm=false \
-    persist.vendor.audio.fluence.voicerec=false \
+    persist.vendor.audio.fluence.voicerec=true \
     persist.vendor.audio.hw.binder.size_kbyte=1024 \
     persist.vendor.audio.ras.enabled=false \
    persist.vendor.audio.hifi.int_codec=true \
@@ -48,8 +56,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Audio Feature
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.media_vol_steps=25 \
     ro.af.client_heap_size_kbyte=7168 \
-    vendor.audio.feature.a2dp_offload.enable=false \
+    vendor.audio.feature.a2dp_offload.enable=true \
     vendor.audio.feature.afe_proxy.enable=true \
     vendor.audio.feature.anc_headset.enable=true \
     vendor.audio.feature.battery_listener.enable=false \
@@ -59,7 +68,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.feature.compr_voip.enable=true \
     vendor.audio.feature.concurrent_capture.enable=false \
     vendor.audio.feature.custom_stereo.enable=true \
-    vendor.audio.feature.display_port.enable=false \
+    vendor.audio.feature.display_port.enable=true \
     vendor.audio.feature.dsm_feedback.enable=false \
     vendor.audio.feature.dynamic_ecns.enable=false \
     vendor.audio.feature.ext_hw_plugin.enable=false \
@@ -69,16 +78,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.feature.fluence.enable=true \
     vendor.audio.feature.fm.enable=true \
     vendor.audio.feature.hdmi_edid.enable=true \
-    vendor.audio.feature.hdmi_passthrough.enable=false \
+    vendor.audio.feature.hdmi_passthrough.enable=true \
     vendor.audio.feature.hfp.enable=true \
     vendor.audio.feature.hifi_audio.enable=true \
     vendor.audio.feature.hwdep_cal.enable=false \
-    vendor.audio.feature.incall_music.enable=false \
+    vendor.audio.feature.incall_music.enable=true \
     vendor.audio.feature.multi_voice_session.enable=true \
     vendor.audio.feature.keep_alive.enable=false \
     vendor.audio.feature.kpi_optimize.enable=true \
     vendor.audio.feature.maxx_audio.enable=false \
-    vendor.audio.feature.ras.enable=false \
+    vendor.audio.feature.ras.enable=true \
     vendor.audio.feature.record_play_concurency.enable=false \
     vendor.audio.feature.src_trkn.enable=true \
     vendor.audio.feature.spkr_prot.enable=true \
@@ -94,7 +103,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
-    bt.max.hfpclient.connections=1 \
+    ro.bluetooth.emb_wp_mode=false \
     vendor.qcom.bluetooth.soc=cherokee \
     persist.bluetooth.bluetooth_audio_hal.disabled=false \
     ro.vendor.bluetooth.wipower=false \
@@ -102,7 +111,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
     ro.bluetooth.a2dp_offload.supported=true \
-    persist.vendor.qcom.bluetooth.enable.splita2dp=true \
+    persist.vendor.qcom.bluetooth.enable.splita2dp=false \
     persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac
 
 # Camera
@@ -114,8 +123,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.camera.camera2=true \
     persist.vendor.camera.HAL3.enabled=1 \
     persist.vendor.camera.eis.enable=1 \
-    persist.vendor.camera.expose.aux=1 \
-    persist.vendor.camera.is_type=3 \
+    persist.vendor.camera.expose.aux=0 \
+    persist.camera.isp.turbo=1 \
+    persist.camera.gcam.fd.ensemble=1 \
+    persist.camera.perfd.enable=true \
+    persist.vendor.camera.is_type=5 \
+    persist.camera.gzoom.at=0 \
+    persist.camera.llv.fuse=2 \
     persist.vendor.camera.max.previewfps=60 \
     vidc.enc.dcvs.extra-buff-count=2 \
     persist.vendor.camera.preview.ubwc=0 \
@@ -125,14 +139,29 @@ PRODUCT_PROPERTY_OVERRIDES += \
      persist.camera.eis.enable=1 \
    persist.vendor.camera.imglib.fddsp=1 \
    persist.vendor.camera.llc=1 \
-   persist.vednor.camera.llnoise=1 \
+   persist.vendor.camera.llnoise=1 \
    persist.vendor.camera.gyro.disable=0 \
    persist.vendor.overlay.izat.optin=rro \
    persist.vendor.camera.fdvideo=1 \
+   persist.vendor.camera.hal3hfr.enable=1 \
+   persist.vendor.camera.quadcfa.id=1 \
    camera.panorama.quality=middle \
    vendor.camera.c2d.rotation=1 \
-   persist.vendor.camera.ven_hdr=0 \
-   persist.vendor.dpm.feature=11
+   persist.vendor.dpm.feature=11 \
+    persist.camera.preview.ubwc=0 \
+    persist.camera.stats.test=0 \
+   persist.camera.depth.focus.cb=0 \
+	camera.disable_zsl_mode=0 \
+	persist.vendor.camera.stats.debugexif=0 \
+	persist.camera.isp.clock.optmz=1 \
+	persist.vendor.camera.isp.turbo=1 \
+	persist.camera.linkpreview=0 \
+	persist.camera.set.afd=4 \
+	persist.bokeh.switch.lux=290 \
+	persist.vendor.camera.fovc.enable=1 \
+        
+	persist.cam.dv=HH6
+
 
 # Codec2 switch
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -144,9 +173,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
      persist.vendor.cne.feature=1 
 
 #CPU
-PRODUCT_PROPERTY_OVERRIDES += \
- ro.vendor.qti.core_ctl_min_cpu=2 \
- ro.vendor.qti.core_ctl_max_cpu=4
+#PRODUCT_PROPERTY_OVERRIDES += \
+# ro.vendor.qti.core_ctl_min_cpu=2 \
+# ro.vendor.qti.core_ctl_max_cpu=4
 
 #DATA
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -155,24 +184,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.sf.enable_hwc_vds=1 \
-    vendor.display.enable_default_color_mode=0 \
-    vendor.video.disable.ubwc=1 \
-    vendor.gralloc.enable_fb_ubwc=1 \
+    debug.gralloc.enable_fb_ubwc=1 \
     debug.sf.hw=1 \
     dev.pm.dyn_samplingrate=1 \
     ro.opengles.version=196610 \
-    persist.demo.hdmirotationlock=false \
-    persist.debug.wfd.enable=1 \
-    persist.hwc.enable_vds=1 \
-    debug.sf.latch_unsignaled=1 \
-    ro.opengles.version=196610 \
-    vendor.display.disable_partial_split=1 \
-    vendor.display.disable_rotator_downscale=1 \
-    vendor.display.disable_skip_validate=1 \
-    vendor.display.enable_default_color_mode=0 \
-    ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
-    ro.surface_flinger.max_virtual_display_dimension=4096
+    ro.qualcomm.cabl=2 \
+    vendor.display.disable_partial_split=1
 
    
 
@@ -245,13 +262,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
    persist.env.fastdorm.enabled=true \
    persist.vendor.radio.no_wait_for_card=1 \
-    persist.vendor.radio.dfr_mode_set=1 \
     persist.vendor.radio.relay_oprt_change=1 \
-    persist.vendor.radio.oem_ind_to_both=0 \
     persist.vendor.radio.0x9e_not_callname=1 \
     persist.vendor.radio.mt_sms_ack=30 \
     persist.vendor.radio.force_get_pref=1 \
     persist.vendor.radio.is_wps_enabled=true \
+    persist.vendor.radio.qcril_uim_vcc_feature=1 \
     persist.vendor.radio.custom_ecc=1 \
     persist.vendor.radio.eri64_as_home=1 \
     persist.vendor.radio.data_con_rprt=1 \
@@ -267,7 +283,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.cne.rat.wlan.chip.oem=WCN \
     persist.vendor.sys.cnd.iwlan=1 \
     persist.vendor.cne.feature=1 \
-    persist.vendor.dpm.feature=0 \
+    persist.vendor.dpm.feature=1 \
     persist.vendor.data.mode=concurrent \
     persist.data.netmgrd.qos.enable=true \
     persist.radio.VT_CAM_INTERFACE=2 \
@@ -295,9 +311,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.rild.nitz_short_ons_2="" \
     persist.rild.nitz_short_ons_3="" \
     ril.subscription.types=NV,RUIM \
-    persist.vendor.qc.sub.rdump.on=1 \
-    persist.vendor.qc.sub.rdump.max=3 \
-    ro.telephony.call_ring.multiple=false \
     DEVICE_PROVISIONED=1 \
     ro.telephony.default_network=10,0 \
     ro.vendor.use_data_netmgrd=true \
@@ -312,7 +325,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.multisim.config=dsds \
     ro.telephony.iwlan_operation_mode=legacy \
     persist.vendor.radio.atfwd.start=true \
-    persist.vendor.radio.add_power_save=1
+    persist.vendor.radio.oem_socket=true \
+    persist.vendor.radio.report_codec=1 \
+    vendor.service.qti.ims.enabled=1 \
+    persist.vendor.data.iwlan.enable=true \
+    rild.libpath=/system/vendor/lib64/libril-qc-qmi-1.so \
+        persist.vendor.radio.add_power_save=1
 
 # persist.vendor.radio.qcril_uim_vcc_feature=1 \
 
@@ -328,7 +346,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.df.dev_name=rmnet_usb0 \
     persist.data.iwlan.enable=true \
     persist.rmnet.data.enable=true \
-    persist.rmnet.mux=enabled \
+    persist.data.netmgrd.qos.enable=true \
     persist.data.df.dev_name=rmnet_usb0
 
 #stm
@@ -352,7 +370,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 #Vibrator
 PRODUCT_PROPERTY_OVERRIDES += \
- persist.vibratorstrenght=1000 
+ persist.vibratorstrenght=1500 
 
 
 # Wifi
@@ -367,6 +385,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.vendor.sensors.mot_detect=true \
 	ro.vendor.sensors.pmd=true \
 	ro.vendor.sensors.sta_detect=true \
+        ro.qti.sensors.dev_ori=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bluetooth.a2dp_offload.supported=true \
@@ -378,16 +397,33 @@ PRODUCT_PROPERTY_OVERRIDES += \
 #Cofig zram
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.vendor.qti.config.zram=true \
-  ro.vendor.qti.config.swap=true
+  ro.vendor.qti.config.zramwriteback=true
+
+#  ro.vendor.qti.config.swap=true
 
 #Call recording
 PRODUCT_PROPERTY_OVERRIDES += \
 persist.call_recording.src=4 \
-persist.call_recording.enabled=true
-
+persist.call_recording.enabled=true \
+persist.sys.showcorners=true \
+persist.sys.fillcutout=false
 #MEdia
 #PRODUCT_PROPERTY_OVERRIDES += \
 #	media.settings.xml="vendor/etc/media_profiles_vendor.xml"
+# SurfaceFlinger
 
+#Perf
+
+
+# Perf
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.qti.core_ctl_min_cpu=2 \
+    ro.vendor.qti.core_ctl_max_cpu=4 \
+    qemu.hw.mainkeys=0
+
+#Wifi
+PRODUCT_PROPERTY_OVERRIDES += \
+     ro.wifi.channels= \
+     ro.wifi.power.reduction=1
 
 

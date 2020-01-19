@@ -1,0 +1,12 @@
+on init
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    chmod 0755  /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0755  /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    
+service vendor.thermal-hal-2-0 /vendor/bin/hw/android.hardware.thermal@2.0-service.pixel
+    interface android.hardware.thermal@1.0::IThermal default
+    interface android.hardware.thermal@2.0::IThermal default
+    class hal
+    user system
+    group system

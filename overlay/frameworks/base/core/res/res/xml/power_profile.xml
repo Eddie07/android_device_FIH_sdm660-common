@@ -1,92 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <device name="Android">
-    <item name="ambient.on">0.1</item>
-    <item name="screen.on">63</item>
-    <item name="screen.full">261</item>
-    <item name="bluetooth.active">10</item>
-    <item name="bluetooth.on">0.1</item>
-    <item name="wifi.on">0.6</item>
-    <item name="wifi.active">64</item>
-    <item name="wifi.scan">24</item>
-    <item name="audio">10</item>
-    <item name="video">50</item>
-    <item name="camera.flashlight">160</item>
-    <item name="camera.avg">550</item>
-    <item name="gps.on">45</item>
-    <item name="radio.active">200</item>
-    <item name="radio.scanning">90</item>
+    <item name="screen.on">94.476</item>
+    <item name="screen.full">238.304</item>
+
+    <!-- Idle Receive current for wifi radio in mA.-->
+    <item name="wifi.controller.idle">1</item>
+    <!-- Rx current for wifi radio in mA.-->
+    <item name="wifi.controller.rx">125</item>
+    <!-- Tx current for wifi radio in mA-->
+    <item name="wifi.controller.tx">350</item>
+    <!-- Operating volatage for wifi radio in mV.-->
+    <item name="wifi.controller.voltage">3700</item>
+    <item name="camera.flashlight">118.687</item>
+    <item name="camera.avg">712.289</item>
+    <!-- GPS related values.-->
+    <array name="gps.signalqualitybased"> <!-- Strength 0 to 1 -->
+      <value>33</value>
+      <value>7</value>
+    </array>
+    <item name="gps.voltage">3700</item>
+        <!-- Additional power used when video is playing -->
+    <item name="video">25</item>
+    <!-- Additional power used when audio is playing -->
+    <item name="audio">75</item>
+
+    <item name="radio.active">180.182</item>
+    <item name="radio.scanning">54.422</item>
     <array name="radio.on">
-        <value>3</value>
-        <value>2.5</value>
+        <value>18.6</value>
+        <value>15</value>
+        <value>10</value>
+        <value>5</value>
+        <value>1</value>
+        <value>0.7</value>
     </array>
     <array name="cpu.clusters.cores">
         <value>4</value>
         <value>4</value>
     </array>
-    <array name="cpu.speeds.cluster0">
-        <value>633000</value>
-        <value>902000</value>
-        <value>1113000</value>
-        <value>1401000</value>
+        <!-- Power consumption when CPU is suspended -->
+    <item name="cpu.suspend">5.25</item>
+    <!-- Additional power consumption when CPU is in a kernel idle loop -->
+    <item name="cpu.idle">5.25</item>
+    <array name="cpu.core_speeds.cluster0">
+        <value>787200</value>
+        <value>1113600</value>
+        <value>1344000</value>
+        <value>1516800</value>
+        <value>1670400</value>
+        <value>1881600</value>
+        <value>2016000</value>
+        <value>2150400</value>
+        <value>2208000</value>
+    </array>
+    <array name="cpu.core_speeds.cluster1">
+        <value>614400</value>
+        <value>883200</value>
+        <value>1094400</value>
+        <value>1382400</value>
         <value>1536000</value>
-        <value>1747000</value>
-        <value>1843000</value>
+        <value>1728000</value>
+        <value>1843200</value>
     </array>
-    <array name="cpu.active.cluster0">
-        <value>34</value>
-        <value>60</value>
-        <value>85</value>
-        <value>128</value>
-        <value>163</value>
-        <value>202</value>
-        <value>253</value>
+    <array name="cpu.core_power.cluster0">
+        <value>37.552</value>
+        <value>63.452</value>
+        <value>72.156</value>
+        <value>91.04</value>
+        <value>97.848</value>
+        <value>111.045</value>
+        <value>111.092</value>
+        <value>130.557</value>
+        <value>142.696</value>
     </array>
-    <array name="cpu.speeds.cluster1">
-        <value>1113000</value>
-        <value>1401000</value>
-        <value>1747000</value>
-        <value>1958000</value>
-        <value>2150000</value>
+    <array name="cpu.core_power.cluster1">
+        <value>37.552</value>
+        <value>56.807</value>
+        <value>63.571</value>
+        <value>75.372</value>
+        <value>84.056</value>
+        <value>114.255</value>
+        <value>123.094</value>
     </array>
-    <array name="cpu.active.cluster1">
-        <value>226</value>
-        <value>331</value>
-        <value>497</value>
-        <value>614</value>
-        <value>777</value>
-    </array>
-    <item name="cpu.awake">1.6</item>
-    <item name="cpu.idle">0.1</item>
-    <array name="memory.bandwidths">
-        <value>22.7</value>
-    </array>
-    <item name="battery.capacity">3060</item>
-    <item name="wifi.controller.idle">0</item>
-    <item name="wifi.controller.rx">0</item>
-    <item name="wifi.controller.tx">0</item>
-    <array name="wifi.controller.tx_levels" />
-    <item name="wifi.controller.voltage">0</item>
-    <array name="wifi.batchedscan">
-        <value>.0002</value>
-        <value>.002</value>
-        <value>.02</value>
-        <value>.2</value>
-        <value>2</value>
-    </array>
+    <item name="cpu.idle">5.029</item>
+    <!-- Average power use by the camera subsystem for a typical camera
+         application. Intended as a rough estimate for an application running a
+         preview and capturing approximately 10 full-resolution pictures per
+         minute. -->
+    <item name="camera.avg">300</item>
+    <!-- Cellular modem related values.-->
     <item name="modem.controller.sleep">0</item>
-    <item name="modem.controller.idle">0</item>
-    <item name="modem.controller.rx">0</item>
-    <array name="modem.controller.tx">
-        <value>0</value>
-        <value>0</value>
-        <value>0</value>
-        <value>0</value>
-        <value>0</value>
+    <item name="modem.controller.idle">105</item>
+    <item name="modem.controller.rx">110</item>
+    <array name="modem.controller.tx"> <!-- Strength 0 to 4 -->
+      <value>1</value>
+      <value>5</value>
+      <value>26</value>
+      <value>100</value>
+      <value>249</value>
     </array>
-    <item name="modem.controller.voltage">0</item>
-    <array name="gps.signalqualitybased">
-        <value>0</value>
-        <value>0</value>
-    </array>
-    <item name="gps.voltage">0</item>
+    <item name="modem.controller.voltage">3700</item>
+    <item name="battery.capacity">3000</item>
 </device>

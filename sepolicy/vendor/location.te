@@ -1,0 +1,4 @@
+allow location self:capability { net_raw };
+allow hal_gnss_qti self:socket  { read write };
+allow location hal_wifi:unix_stream_socket { read write };
+allow hal_gnss_qti hal_wifi:unix_stream_socket { read write };

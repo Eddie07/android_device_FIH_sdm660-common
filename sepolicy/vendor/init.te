@@ -1,6 +1,6 @@
-allow init fsg_firmware_file:dir { mounton };
-allow init ab_block_device:lnk_file relabelto;
-allow init socket_device:sock_file { create setattr };
-allow init fsg_firmware_file:filesystem  { relabelfrom  mount };
-#TODO: This should not be needed and needs to be cleaned.
-allow { fsg_firmware_file  }self:filesystem associate;
+allow init adsprpcd_file:filesystem { mount relabelfrom relabelto };
+allow init vendor_firmware_file:dir mounton;
+allow init mnt_vendor_file:dir mounton;
+allow init vendor_firmware_file:filesystem { relabelto relabelfrom mount };
+allow init persist_drm_file:filesystem { relabelto relabelfrom mount associate };
+allow persist_drm_file self:filesystem { associate };

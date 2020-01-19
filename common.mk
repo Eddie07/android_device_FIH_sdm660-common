@@ -35,9 +35,20 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
+PRODUCT_PACKAGES += \
+	DisplayCutoutEmulationHH6Overlay \
+        vendor.lineage.touch@1.0-service.ss2 \
+        GestureHandler \
+	DisplayCutoutEmulationSATOverlay \
+	DisplayCutoutEmulationSATOverlay2
 
 # Soong namespaces
-PRODUCT_SOONG_NAMESPACES += device/sharp/sdm660-common
+PRODUCT_SOONG_NAMESPACES += \
+    device/sharp/sdm660-common \
+    vendor/nxp/opensource/pn5xx \
+    vendor/qcom/opensource/interfaces
+
+#    vendor/qcom/opensource/fm-commonsys
 
 # Additional native libraries
 PRODUCT_COPY_FILES += \
@@ -46,7 +57,7 @@ PRODUCT_COPY_FILES += \
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
-    com.dsi.ant.antradio_library
+    libantradio
 
 PRODUCT_COPY_FILES += \
     external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.dsi.ant.antradio_library.xml
@@ -80,6 +91,7 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libvolumelistener \
     tinyplay \
+	libqcomvoiceprocessingdescriptors \
     tinymix
 
 
@@ -87,10 +99,15 @@ PRODUCT_PACKAGES += \
      android.hardware.biometrics.face@1.0-impl \
      android.hardware.biometrics.face@1.0
 
+
 PRODUCT_PACKAGES += \
-    audio.bluetooth.default \
-    android.hardware.bluetooth.audio@2.0-impl \
-    android.hardware.bluetooth.a2dp@1.0-impl
+    libbthost_if \
+   audio.bluetooth.default \
+   android.hardware.bluetooth.audio@2.0-impl
+
+#    audio.bluetooth.default \
+
+#    android.hardware.bluetooth.a2dp@1.0-impl
 
 PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_in_audio_policy_configuration.xml \
@@ -98,15 +115,7 @@ PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
-    $(TOPDIR)frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
-
-# Bluetooth
-#PRODUCT_PACKAGES += \
-#    android.hardware.bluetooth@1.0 \
-#    libldacBT_enc \
-##    libldacBT_abr \
-#    libbt-vendor
 
 
 # Boot control HAL
@@ -115,15 +124,17 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl.recovery \
     android.hardware.boot@1.0-service
 
-# Camera
+#Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
-    camera.device@3.2-impl \
-    libbson.vendor \
-    libxml2 \
-    vendor.qti.hardware.camera.device@1.0 \
-    Snap
+    android.hardware.camera.common@1.0.so \
+    libqomx_core \
+    libmmjpeg_interface \
+    libmmcamera_interface
+
+#    Snap
+
     
 #Codec2 modules
 PRODUCT_PACKAGES += \
@@ -139,24 +150,22 @@ PRODUCT_PACKAGES += \
 
 # Configstore
 PRODUCT_PACKAGES += \
-    android.hardware.configstore@1.0-service \
+    android.hardware.configstore@1.1-service \
 
-#CryptHal
+
+
+# CryptfsHW
 PRODUCT_PACKAGES += \
-     vendor.qti.hardware.cryptfshw@1.0
+	vendor.qti.hardware.cryptfshw@1.0-service-qti.qsee
 
-PRODUCT_PACKAGES += \
-        SnapdragonCamera
+#    vendor.qti.hardware.cryptfshw@1.0-service-qti \
+# 	vendor.qti.hardware.cryptfshw@1.0-service-ioctl-qti \
+#        vendor.qti.hardware.cryptfshw@1.0 \
+#       vendor.qti.hardware.cryptfshw@1.0-service-qti.qsee \#
+#	vendor.qti.hardware.cryptfshw@1.0-base \
+#	vendor.qti.hardware.cryptfshw
 
 
-# Dalvik
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapgrowthlimit=256m \
-    dalvik.vm.heapstartsize=8m \
-    dalvik.vm.heapsize=512m \
-    dalvik.vm.heaptargetutilization=0.75 \
-    dalvik.vm.heapminfree=512k \
-    dalvik.vm.heapmaxfree=8m
 
 # Display
 PRODUCT_PACKAGES += \
@@ -198,10 +207,22 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/rootdir/bin/init.qti.qseecomd.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qti.qseecomd.sh
 
-# Fingerprint
+# FM
 #PRODUCT_PACKAGES += \
-#    android.hardware.biometrics.fingerprint@2.1 \
-#    android.hardware.biometrics.fingerprint@2.1-service
+#    libqcomfm_jni \
+#    init.qti.fm.sh \
+#	fm_helium \
+#	libfm-hci \
+#    qcom.fmradio
+
+#FM2 \
+
+#PRODUCT_BOOT_JARS += qcom.fmradio
+
+#Fingerprint common
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1 \
+    android.hardware.biometrics.fingerprint@2.1-service
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -225,13 +246,17 @@ PRODUCT_COPY_FILES += \
 
 # RIL
 PRODUCT_PACKAGES += \
+    android.hardware.radio@1.4 \
     android.hardware.radio@1.2 \
-    android.hardware.radio@1.2 \
-    android.hardware.radio.config@1.0 \
+    android.hardware.radio.config@1.1 \
     android.hardware.secure_element@1.0 \
+    android.hardware.radio.deprecated@1.0 \
     librmnetctl \
     libxml2 \
     libprotobuf-cpp-full
+
+#    android.hardware.radio@1.2 \
+#    android.hardware.radio@1.2 \
 
 # Health
 PRODUCT_PACKAGES += \
@@ -246,11 +271,6 @@ PRODUCT_PACKAGES += \
     android.hidl.manager@1.0-java \
     android.hidl.manager@1.2-java
 
-# IMS
-PRODUCT_PACKAGES += \
-    ims-ext-common \
-    ims-ext-common_system \
-    ims_ext_common.xml
 
 # Init
 PRODUCT_PACKAGES += \
@@ -266,6 +286,7 @@ PRODUCT_PACKAGES += \
     init.qcom.post_boot.sh \
     init.qcom.sensors.sh \
     init.qcom.sh \
+    init.qti.fm.sh \
     init.qti.qseecomd.sh \
     ueventd.qcom.rc \
     init.sku.rc \
@@ -275,6 +296,7 @@ PRODUCT_PACKAGES += \
 # IPACM
 PRODUCT_PACKAGES += \
     ipacm \
+    ipacm.rc \
     IPACM_cfg.xml \
     libipanat \
     liboffloadhal
@@ -285,7 +307,7 @@ PRODUCT_PACKAGES += \
     ethertypes
 
 
-# IRQ
+# IRQ/Perf
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/perf/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf \
     $(LOCAL_PATH)/configs/perf/msm_irqbalance_sdm630.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance_sdm630.conf
@@ -305,15 +327,17 @@ PRODUCT_PACKAGES += \
 
 # Lineage hardware
 PRODUCT_PACKAGES += \
-     vendor.lineage.touch@1.0-service.jason \
      vendor.lineage.trust@1.0-service \
      vendor.lineage.touch@1.0-service.sdm660
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
-   vendor.lineage.livedisplay@2.0-service.sat
+		vendor.lineage.livedisplay@2.0-service.sat
 
-#    vendor.lineage.livedisplay@2.0-service-sdm
+
+#   
+
+#    
 
 #     vendor.lineage.livedisplay@2.0-service.sat
 
@@ -324,7 +348,7 @@ PRODUCT_PACKAGES += \
 # LiveDisplay
 #PRODUCT_PACKAGES += \
 #    lineage.livedisplay@2.0-service-sysfs \
-#    vendor.lineage.livedisplay@2.0-service-sysfs \
+#    
 #    vendor.lineage.livedisplay@2.0-service-sdm
     
 #    vendor.lineage.livedisplay@2.0-service-legacymm
@@ -334,6 +358,8 @@ PRODUCT_PACKAGES += \
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+ $(LOCAL_PATH)/media/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml \
+ $(LOCAL_PATH)/media/media_codecs_omx.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_omx.xml \
     $(LOCAL_PATH)/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
     $(LOCAL_PATH)/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
@@ -348,13 +374,30 @@ PRODUCT_PACKAGES += \
     libregistermsext \
     mediametrics
 
+#PRODUCT_PACKAGES += \
+#    NQNfcNci \
+#    libnqnfc-nci \
+#    libnqnfc_nci_jni \
+#    nfc_nci.nqx.default \
+#    libp61-jcop-kit \
+#    com.nxp.nfc.nq \
+#    com.nxp.nfc.nq.xml \
+#    nqnfcee_access.xml \
+#    nqnfcse_access.xml \
+#    Tag \
+#    nfc_nci_nxp \
+#    com.android.nfc_extras \
+#    vendor.nxp.hardware.nfc@1.2-service \
+#    nfc_nci.nqx.default.hw
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.nfc_nci=nqx.default
+
+#    vendor.qti.nfc.chipid=0x51
 # Network
 PRODUCT_PACKAGES += \
     android.system.net.netd@1.0 \
     libandroid_net \
-    android.hardware.nfc@1.2-service \
-    nfc_nci_nxp \
-    vendor.nxp.hardware.nfc@1.1-service \
     netutils-wrapper-1.0
 
 # Permissions
@@ -407,7 +450,7 @@ PRODUCT_COPY_FILES += \
 # QCOM
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-wfd.xml:system/etc/permissions/privapp-permissions-wfd.xml \
-    $(LOCAL_PATH)/configs/telephony_product_privapp-permissions-qti.xml:system/etc/permissions/telephony_product_privapp-permissions-qti.xml \
+    $(LOCAL_PATH)/configs/telephony_product_privapp-permissions-qti.xml:system/product/etc/permissions/telephony_product_privapp-permissions-qti.xml \
     $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml \
     $(LOCAL_PATH)/configs/org.codeaurora.snapcam.xml:system/product/etc/permissions/org.codeaurora.snapcam.xml
 
@@ -432,7 +475,10 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service-qti
+ android.hardware.power@1.2-service-qti \
+ android.hardware.power.stats@1.0-service.pixel
+
+#    android.hardware.power@1.2
 
 # QMI
 PRODUCT_PACKAGES += \
@@ -441,6 +487,7 @@ PRODUCT_PACKAGES += \
 # Radio
 PRODUCT_PACKAGES += \
     ims-ext-common \
+    telephony-ext \
     ims_ext_common.xml \
     qti-telephony-hidl-wrapper \
     qti_telephony_hidl_wrapper.xml \
@@ -448,6 +495,9 @@ PRODUCT_PACKAGES += \
     qti_telephony_utils.xml \
     librmnetctl \
     libprotobuf-cpp-full
+
+PRODUCT_BOOT_JARS += \
+     telephony-ext
 
 
 # RCS
@@ -489,13 +539,14 @@ PRODUCT_PACKAGES += \
     su
 
 # Telephony
-PRODUCT_PACKAGES += \
-    telephony-ext
+#PRODUCT_PACKAGES += \
+#    telephony-ext
 
 
-PRODUCT_BOOT_JARS += \
-    ims-ext-common \
-    telephony-ext
+#PRODUCT_BOOT_JARS += \
+#    ims-ext-common
+
+#    telephony-ext
 
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \
@@ -512,9 +563,19 @@ PRODUCT_PACKAGES += \
     textclassifier.smartselection.bundle1
 
 # Thermal
+#PRODUCT_PACKAGES += \
+#    android.hardware.thermal@1.0-impl \
+#    android.hardware.thermal@1.0-service \
+#    thermal.sdm660
+# Thermal HAL
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0-service.mock \
+    android.hardware.thermal@2.0-service.pixel \
+    android.hardware.power.stats@1.0-service.pixel \
     thermal.sdm660
+PRODUCT_COPY_FILES += \
+    device/sharp/sdm660-common/configs/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.thermal.config=thermal_info_config.json
 
 #   android.hardware.thermal@1.1-service.sdm660
 
@@ -531,14 +592,16 @@ PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service
 
+
 # VNDK
-# Update this list with what each blob is actually for
-# libicuuc: vendor.qti.hardware.qteeconnector@1.0-impl
-# libstdc++: camera.sdm660
 PRODUCT_PACKAGES += \
     libicuuc.vendor \
+    libqti_vndfwk_detect \
+    libvndfwk_detect_jni.qti \
+    libdng_sdk.vendor_32 \
     libstdc++.vendor \
     libgui_vendor \
+    vndk-ext \
     vndk_package
 
 
@@ -572,6 +635,19 @@ PRODUCT_PACKAGES += \
 # WiFi Display
 PRODUCT_PACKAGES += \
     libaacwrapper \
+    WfdService \
+    WfdCommon \
     libnl
+
+PRODUCT_BOOT_JARS += \
+   WfdCommon
+
+#QCOM sources part
+
+PRODUCT_PACKAGES += \
+      libmmosal \
+      libmmosal_proprietary \
+      libmmparser_lite \
+  
 
 

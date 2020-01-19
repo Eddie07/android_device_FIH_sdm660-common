@@ -1,3 +1,4 @@
-allow rild vendor_file:file rx_file_perms;
-allow rild fwk_sensor_hwservice:hwservice_manager find;
-allow rild system_server:binder { call transfer };
+set_prop(rild, system_radio_prop);
+
+dontaudit rild tombstone_data_file:dir search;
+dontaudit rild vendor_file:file ioctl;

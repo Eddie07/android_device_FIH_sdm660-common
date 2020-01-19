@@ -1,1 +1,11 @@
-type post_boot_prop, property_type;
+# Fingerprint
+type vendor_fp_prop, property_type;
+
+# Sensors
+type sensors_panel_prop, property_type;
+
+# Thermal engine
+type thermal_prop, property_type;
+
+#Nfc
+type vendor_nfc_prop, property_type;

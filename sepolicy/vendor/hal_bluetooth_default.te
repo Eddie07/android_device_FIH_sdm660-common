@@ -1,3 +1,0 @@
-allow hal_bluetooth_default wcnss_filter:unix_stream_socket connectto;
-allow hal_bluetooth_qti vfat:file { read open };
-allow hal_bluetooth_qti proc:file { read open write };

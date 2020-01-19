@@ -19,11 +19,14 @@
 <resources>
     <!-- Set the automatic brightness mode on by default -->
     <bool name="def_screen_brightness_automatic_mode">true</bool>
-
+ <!-- <bool name="def_system_navigation_keys_enabled">true</bool> -->
+    <!-- Default for Settings.System.VIBRATE_WHEN_RINGING -->
+    <bool name="def_vibrate_when_ringing">true</bool>
+    <!-- Default for Settings.Global.APPLY_RAMPING_RINGER -->
+    <bool name="def_apply_ramping_ringer">false</bool>
     <!-- Default screen brightness, from 0 to 255. 82 is 32%. -->
     <integer name="def_screen_brightness">82</integer>
 
     <!-- 30 seconds for default screen timeout -->
     <integer name="def_screen_off_timeout">30000</integer>
-
 </resources>

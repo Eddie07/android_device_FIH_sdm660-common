@@ -1,7 +1,8 @@
-allow system_server fpc_extension_service:hwservice_manager find;
-
-binder_call(system_server,rild);
+# Fingerprint
+allow system_server fingerprint_sysfs:file rw_file_perms;
 
 # Input devices
-r_dir_file(system_server, idc_file);
-r_dir_file(system_server, keylayout_file);
+#r_dir_file(system_server, idc_file);
+#r_dir_file(system_server, keylayout_file);
+
+get_prop(system_server, vendor_fp_prop)

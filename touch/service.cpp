@@ -14,49 +14,30 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "vendor.lineage.touch@1.0-service.sdm660"
+#define LOG_TAG "lineage.touch@1.0-service.oneplus_msm8998"
 
 #include <android-base/logging.h>
+#include <binder/ProcessState.h>
 #include <hidl/HidlTransportSupport.h>
+#include "TouchscreenGesture.h"
 
-#include "KeyDisabler.h"
-
-using android::OK;
-using android::sp;
-using android::status_t;
-using android::hardware::configureRpcThreadpool;
-using android::hardware::joinRpcThreadpool;
-
-using ::vendor::lineage::touch::V1_0::IKeyDisabler;
-using ::vendor::lineage::touch::V1_0::implementation::KeyDisabler;
+using ::vendor::lineage::touch::V1_0::ITouchscreenGesture;
+using ::vendor::lineage::touch::V1_0::implementation::TouchscreenGesture;
 
 int main() {
-    sp<KeyDisabler> keyDisabler;
-    status_t status;
+    android::sp<ITouchscreenGesture> gestureService = new TouchscreenGesture();
 
-    LOG(INFO) << "Touch HAL service is starting.";
+    android::hardware::configureRpcThreadpool(1, true /*callerWillJoin*/);
 
-    keyDisabler = new KeyDisabler();
-    if (keyDisabler == nullptr) {
-        LOG(ERROR) << "Can not create an instance of Touch HAL KeyDisabler Iface, exiting.";
-        goto shutdown;
+    if (gestureService->registerAsService() != android::OK) {
+        LOG(ERROR) << "Cannot register touchscreen gesture HAL service.";
+        return 1;
     }
 
-    configureRpcThreadpool(1, true /*callerWillJoin*/);
+    LOG(INFO) << "Touchscreen HAL service ready.";
 
-    status = keyDisabler->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for Touch HAL KeyDisabler Iface ("
-                   << status << ")";
-        goto shutdown;
-    }
+    android::hardware::joinRpcThreadpool();
 
-    LOG(INFO) << "Touch HAL service is ready.";
-    joinRpcThreadpool();
-    // Should not pass this line
-
-shutdown:
-    // In normal operation, we don't expect the thread pool to shutdown
-    LOG(ERROR) << "Touch HAL service is shutting down.";
+    LOG(ERROR) << "Touchscreen HAL service failed to join thread pool.";
     return 1;
 }
